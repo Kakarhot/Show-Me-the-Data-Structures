@@ -1,10 +1,12 @@
+from collections import deque
+
 class LRU_Cache(object):
 
     def __init__(self, capacity):
         # Initialize class variables        
         self.cache = {}
         self.capacity = capacity
-        self.queue = []
+        self.queue = deque()
 
     def get(self, key):
         # Retrieve item from provided key. Return -1 if nonexistent. 
@@ -18,7 +20,7 @@ class LRU_Cache(object):
         # Set the value if the key is not present in the cache. If the cache is at capacity remove the oldest item. 
         if key not in self.cache:
             if len(self.cache.keys()) == self.capacity:
-                removed_key = self.queue.pop(0)
+                removed_key = self.queue.popleft()
                 self.cache.pop(removed_key)
                 
             self.cache[key] = value
